@@ -2,13 +2,69 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Кошик | КупуйТовар</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інтернет-магазин "КупуйТовар"</title>
+    <style>
+        /* Основные стили */
+        body { font-family: 'Arial', sans-serif; margin: 0; }
+        header { background: #4a76a8; color: white; padding: 1rem; }
+        nav a { color: white; margin-right: 1rem; }
+        .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 1rem; }
+        .product { border: 1px solid #ddd; padding: 1rem; border-radius: 5px; }
+    </style>
 </head>
 <body>
-    <h2>Ваш кошик</h2>
-    <div id="cart-items"></div>
+    <header>
+        <h1>КупуйТовар</h1>
+        <nav>
+            <a href="/">Головна</a>
+            <a href="/catalog">Каталог</a>
+            <a href="/cart">Кошик (<span id="cart-count">0</span>)</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Ласкаво просимо до найкращого магазину!</h2>
+        </section>
+
+        <section class="products">
+            <!-- Товары будут здесь -->
+        </section>
+    </main>
+
     <script>
+        // Данные товаров
+        const products = [
+            { id: 1, name: "Смартфон", price: 8999, image: "phone.jpg" },
+            { id: 2, name: "Ноутбук", price: 21999, image: "laptop.jpg" }
+        ];
+
+        // Отображение товаров
+        document.querySelector('.products').innerHTML = products.map(product => `
+            <div class="product">
+                <img src="${product.image}" alt="${product.name}" width="100">
+                <h3>${product.name}</h3>
+                <p>${product.price} грн</p>
+                <button onclick="addToCart(${product.id})">В кошик</button>
+            </div>
+        `).join('');
+
         // Логика корзины
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            document.getElementById('cart-count').textContent = cart.length;
+        }
+
+        updateCartCount();
     </script>
 </body>
 </html>
