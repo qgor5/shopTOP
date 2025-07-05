@@ -2,104 +2,44 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>КупуйТовар | Ексклюзивні товари для вашого дому</title>
-    <meta name="description" content="Інтернет-магазин ексклюзивних товарів з доставкою по Україні. Гарантія якості, найкращі ціни та індивідуальний підхід!">
+    <title>КупуйТовар - Інтернет-магазин</title>
     <style>
-        /* Эксклюзивный дизайн */
-        :root {
-            --primary: #4b6cc1;
-            --secondary: #3a4a7a;
-        }
-        body {
-            font-family: 'Montserrat', sans-serif;
-            color: #333;
-        }
-        .hero {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-        /* Анимации */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
+        body { font-family: Arial, sans-serif; }
+        .product { border: 1px solid #ddd; padding: 15px; margin: 10px; }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="logo">Купуй<span>Товар</span></div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="/">Головна</a></li>
-                    <li><a href="/catalog">Каталог</a></li>
-                    <li><a href="/about">Про нас</a></li>
-                    <li><a href="/contacts">Контакти</a></li>
-                </ul>
-            </nav>
-            <div class="cart">Кошик (<span id="cart-count">0</span>)</div>
-        </div>
+    <header>
+        <h1>КупуйТовар</h1>
+        <nav>
+            <a href="/catalog">Каталог</a> | 
+            <a href="/cart">Кошик</a>
+        </nav>
     </header>
-
+    
     <main>
-        <section class="hero">
-            <div class="container">
-                <h1>Ексклюзивні товари для вашого дому</h1>
-                <p>Знайдіть ідеальні рішення для вашого побуту</p>
-                <a href="/catalog" class="btn">Перейти до покупок</a>
-            </div>
-        </section>
-
-        <section class="featured-products">
-            <h2>Наші бестселери</h2>
-            <div class="products-grid">
-                <!-- Товары будут подгружаться через JS -->
-            </div>
-        </section>
-
-        <section class="seo-content">
-            <h2>Чому обирають КупуйТовар?</h2>
-            <div class="advantages">
-                <div class="advantage">
-                    <h3>🛡️ Гарантія якості</h3>
-                    <p>Кожен товар проходить 3-етапну перевірку перед відправкою</p>
-                </div>
-                <div class="advantage">
-                    <h3>🚚 Швидка доставка</h3>
-                    <p>Доставка по Україні за 1-3 дні без зайвих націнок</p>
-                </div>
-            </div>
-        </section>
+        <h2>Популярні товари</h2>
+        <div id="products"></div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>© 2024 КупуйТовар. Всі права захищені</p>
-        </div>
-    </footer>
-
     <script>
-        // Динамическая загрузка товаров
-        fetch('/api/products')
-            .then(response => response.json())
-            .then(products => {
-                const grid = document.querySelector('.products-grid');
-                products.forEach(product => {
-                    grid.innerHTML += `
-                        <div class="product-card">
-                            <img src="${product.image}" alt="${product.name}">
-                            <h3>${product.name}</h3>
-                            <p class="price">${product.price} грн</p>
-                            <button class="add-to-cart">В кошик</button>
-                        </div>
-                    `;
-                });
-            });
+        // Пример данных товаров
+        const products = [
+            { id: 1, name: "Смартфон", price: 8999 },
+            { id: 2, name: "Ноутбук", price: 21999 }
+        ];
+
+        document.getElementById('products').innerHTML = products.map(product => `
+            <div class="product">
+                <h3>${product.name}</h3>
+                <p>Ціна: ${product.price} грн</p>
+                <button onclick="addToCart(${product.id})">В кошик</button>
+            </div>
+        `).join('');
+
+        function addToCart(id) {
+            alert(`Товар ${id} додано в кошик!`);
+        }
     </script>
 </body>
 </html>
